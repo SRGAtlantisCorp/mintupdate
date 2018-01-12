@@ -5,7 +5,7 @@ jobs:
   "mint-18":
     docker:
       - image: linuxmintd/linuxmint-sylvia
-      environment:
+      - environment:
           TAR: "$CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1".tar
 
     steps:
