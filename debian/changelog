@@ -4,7 +4,7 @@ mintupdate (5.3.2) sylvia; urgency=medium
   * rules: update engrampa version for Betsy (#285)
 
   [ Clement Lefebvre ]
-  * Kernels: Remove msgids in synaptic call and support window-progress
+  * Kernels: Remove msgids in synaptic call and support window-progres
 
  -- Clement Lefebvre <root@linuxmint.com>  Wed, 22 Nov 2017 12:10:31 +0000
 
