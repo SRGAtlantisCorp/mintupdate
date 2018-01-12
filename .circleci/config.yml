@@ -17,8 +17,7 @@ jobs:
       - run:
           name: Prepare Packages
           command: |
-            TAR=$CIRCLE_PROJECT_REPONAME
-            TAR.=$CIRCLE_SHA1.tar
+            TAR="${CIRCLE_PROJECT_REPONAME}_${CIRCLE_SHA1}".tar
             mkdir /packages
             mv /root/*.deb /packages/
             cd /packages
@@ -32,8 +31,7 @@ jobs:
               wget https://github.com/tcnksm/ghr/releases/download/v0.5.4/ghr_v0.5.4_linux_amd64.zip
               unzip ghr_v0.5.4_linux_amd64.zip
               TAG=`git rev-parse --abbrev-ref HEAD`.$CIRCLE_JOB
-              TAR=/packages/$CIRCLE_PROJECT_REPONAME
-              TAR.=$CIRCLE_SHA1.tar.gz
+              TAR="/packages/${CIRCLE_PROJECT_REPONAME}_${CIRCLE_SHA1}".tar.gz
               ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -replace $TAG $TAR
               ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -recreate -b "Latest unstable packages" $TAG $TAR
             fi
