@@ -20,8 +20,8 @@ jobs:
             mkdir /packages;
             mv /root/*.deb /packages/;
             cd /
-            tar cvf $CIRCLE_PROJECT_REPONAME.tar /packages
-            gzip $CIRCLE_PROJECT_REPONAME.tar
+            tar cvf $CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1.tar /packages/*
+            gzip $CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1.tar
 
       - run:
           name: Deploy to Github
@@ -31,7 +31,7 @@ jobs:
               unzip ghr_v0.5.4_linux_amd64.zip
               TAG=`git rev-parse --abbrev-ref HEAD`.$CIRCLE_JOB
               ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -replace $TAG /$CIRCLE_PROJECT_REPONAME.tar.gz
-              ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -recreate -b "Latest unstable packages" $TAG /$CIRCLE_PROJECT_REPONAME.tar.gz
+              ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -recreate -b "Latest unstable packages" $TAG /$CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1.tar.gz
             fi
 
 workflows:
