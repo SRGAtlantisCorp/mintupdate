@@ -30,7 +30,7 @@ jobs:
               wget https://github.com/tcnksm/ghr/releases/download/v0.5.4/ghr_v0.5.4_linux_amd64.zip
               unzip ghr_v0.5.4_linux_amd64.zip
               TAG=`git rev-parse --abbrev-ref HEAD`.$CIRCLE_JOB
-              ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -replace $TAG /$CIRCLE_PROJECT_REPONAME.tar.gz
+              ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -replace $TAG /$CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1.tar.gz
               ./ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME -recreate -b "Latest unstable packages" $TAG /$CIRCLE_PROJECT_REPONAME_$CIRCLE_SHA1.tar.gz
             fi
 
