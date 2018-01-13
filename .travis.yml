@@ -11,12 +11,20 @@ services:
 script:
   - docker run -v `pwd`/output:/output linuxmintd/${BUILD_ENV} /bin/sh -c "cd /output; mint-build mint-common;"
   - docker run -v `pwd`:/source linuxmintd/${BUILD_ENV} /bin/sh -c "cd /source; mint-build;"
-
-# deploy:
-#   - provider: releases # Uploads to github
-#     api_key:
-#       secure:  # See Travis CI documentation
-#     file: created.AppImage
-#     skip_cleanup: true
-#     on: # Put here conditions for deployment.
-#       tags: true # This condition will only deploy on tagged commits.
+  - |
+    if [ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" ]; then
+        RELEASE="mintupdate_${TRAVIS_COMMIT}"
+        mkdir "${RELEASE}"
+        cd "${RELEASE}"
+        cp ../output/*/*.deb ./
+        cp ../source/*.deb ./
+        git log > git.log
+        cd ..
+        tar cvf ${RELEASE}.tar ${RELEASE}
+        gzip ${RELEASE}.tar
+        wget https://github.com/tcnksm/ghr/releases/download/v0.5.4/ghr_v0.5.4_linux_amd64.zip
+        unzip ghr_v0.5.4_linux_amd64.zip
+        TAG="TRAVIS-".`git rev-parse --abbrev-ref HEAD`.$BUILD_ENV
+        ./ghr -t $GITHUB_TOKEN -u clefebvre -r mintupdate -replace $TAG ${RELEASE}.tar.gz
+        ./ghr -t $GITHUB_TOKEN -u clefebvre -r mintupdate -recreate -b "Latest unstable packages" $TAG ${RELEASE}.tar.gz
+    fi
