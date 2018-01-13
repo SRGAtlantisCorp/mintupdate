@@ -11,7 +11,7 @@ jobs:
                 command: mkdir -p /dependencies && cd /dependencies && mint-build mint-common
             - run:
                 name: Build Project
-                command: mint-build -i
+                command: mint-build
             - run:
                 name: Prepare Packages
                 command: |
@@ -45,7 +45,7 @@ jobs:
                 command: mkdir -p /dependencies && cd /dependencies && mint-build mint-common
             - run:
                 name: Build Project
-                command: mint-build -i
+                command: mint-build
             - run:
                 name: Prepare Packages
                 command: |
