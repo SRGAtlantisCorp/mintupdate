@@ -1,0 +1,18 @@
+dist: trusty
+sudo: required
+services:
+  - docker
+
+script:
+  - docker pull linuxmintd/linuxmint-sylvia
+  - docker run --name buildvm linuxmintd/linuxmint-sylvia /bin/bash mkdir -p /dependencies && cd /dependencies && mint-build mint-common
+  #- docker cp buildvm:/path/to/created.AppImage created.AppImage
+
+# deploy:
+#   - provider: releases # Uploads to github
+#     api_key:
+#       secure:  # See Travis CI documentation
+#     file: created.AppImage
+#     skip_cleanup: true
+#     on: # Put here conditions for deployment.
+#       tags: true # This condition will only deploy on tagged commits.
