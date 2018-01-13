@@ -5,7 +5,8 @@ services:
 
 script:
   - docker pull linuxmintd/linuxmint-sylvia
-  - docker run --name buildvm linuxmintd/linuxmint-sylvia /bin/bash mkdir -p /dependencies && cd /dependencies && mint-build mint-common
+  - docker run --name buildvm linuxmintd/linuxmint-sylvia /bin/sh -c "mkdir -p /dependencies; cd /dependencies; mint-build mint-common;"
+  - docker run --name buildvm linuxmintd/linuxmint-sylvia /bin/sh -c "mint-build;"
   #- docker cp buildvm:/path/to/created.AppImage created.AppImage
 
 # deploy:
