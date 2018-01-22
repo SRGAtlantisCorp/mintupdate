@@ -14,12 +14,12 @@ aliases:
 
     - &step_build
         run:
-            name: Build ${CIRCLE_PROJECT_REPONAME}
+            name: Build project
             command: mint-build -i
 
     - &step_deploy
         run:
-            name: Prepare Packages
+            name: Prepare packages
             command: |
                 if [ -z $CI_PULL_REQUEST ]; then
                     RELEASE="${CIRCLE_PROJECT_REPONAME}_${CIRCLE_JOB}_${CIRCLE_SHA1}"
@@ -32,10 +32,11 @@ aliases:
                     gzip ${RELEASE}.tar
                 fi
         run:
-            name: Deploy to Github
+            name: Deploy packages to Github
             command: |
                 if [ -z $CI_PULL_REQUEST ]; then
                     wget https://github.com/tcnksm/ghr/releases/download/v0.5.4/ghr_v0.5.4_linux_amd64.zip
+                    apt-get install --yes unzip
                     unzip ghr_v0.5.4_linux_amd64.zip
                     TAG="CIRCLECI-".`git rev-parse --abbrev-ref HEAD`.$CIRCLE_JOB
                     RELEASE="${CIRCLE_PROJECT_REPONAME}_${CIRCLE_JOB}_${CIRCLE_SHA1}"
