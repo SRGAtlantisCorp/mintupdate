@@ -2,6 +2,11 @@ version: 2.0
 
 aliases:
 
+    - &step_prepare
+        run:
+            name: Prepare environment
+            command: apt-get update
+
     - &step_build_dep
         run:
             name: Build mint-common
@@ -44,6 +49,7 @@ jobs:
             - image: linuxmintd/mint18-amd64
         steps:
             - checkout
+            - *step_prepare
             - *step_build_dep
             - *step_build
             - *step_deploy
@@ -53,6 +59,7 @@ jobs:
             - image: linuxmintd/mint19-amd64
         steps:
             - checkout
+            - *step_prepare
             - *step_build_dep
             - *step_build
             - *step_deploy
@@ -62,6 +69,7 @@ jobs:
             - image: linuxmintd/lmde3-amd64
         steps:
             - checkout
+            - *step_prepare
             - *step_build_dep
             - *step_build
             - *step_deploy
