@@ -1,7 +1,7 @@
 env:
   matrix:
-    - BUILD_ENV=linuxmint-sylvia
-    - BUILD_ENV=linuxmint-cindy
+    - BUILD_ENV=mint19-amd64
+    - BUILD_ENV=lmde3-amd64
 
 dist: trusty
 sudo: required
