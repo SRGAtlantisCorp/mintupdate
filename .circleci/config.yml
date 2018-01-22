@@ -2,14 +2,17 @@ version: 2.0
 
 aliases:
 
-    - &common_steps
-        checkout
+    - &step_build_dep
         run:
-            name: Build Dependency Xapps
+            name: Build mint-common
             command: mkdir -p /dependencies && cd /dependencies && mint-build mint-common -i
+
+    - &step_build
         run:
-            name: Build Project
+            name: Build ${CIRCLE_PROJECT_REPONAME}
             command: mint-build -i
+
+    - &step_deploy
         run:
             name: Prepare Packages
             command: |
@@ -40,19 +43,28 @@ jobs:
         docker:
             - image: linuxmintd/mint18-amd64
         steps:
-            - *common_steps
+            - checkout
+            - *step_build_dep
+            - *step_build
+            - *step_deploy
 
     "mint19":
         docker:
             - image: linuxmintd/mint19-amd64
         steps:
-            - *common_steps
+            - checkout
+            - *step_build_dep
+            - *step_build
+            - *step_deploy
 
     "lmde3":
         docker:
             - image: linuxmintd/lmde3-amd64
         steps:
-            - *common_steps
+            - checkout
+            - *step_build_dep
+            - *step_build
+            - *step_deploy
 
 workflows:
     version: 2
